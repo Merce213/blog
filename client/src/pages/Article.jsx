@@ -22,13 +22,13 @@ const Article = () => {
 		return date.toLocaleString("fr-FR");
 	};
 
-	const { title, content, createdAt } = article;
+	const { title, content, image, createdAt } = article;
 	return (
 		<>
 			<div
 				className={`relative h-[50dvh] w-full bg-cover bg-center bg-no-repeat brightness-50 after:absolute after:bottom-0 after:left-0 after:block after:h-[150px] after:w-full after:bg-gradient-to-t after:from-slate-900 after:to-transparent after:content-['']`}
 				style={{
-					backgroundImage: `url( https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?auto=format&fit=crop )`,
+					backgroundImage: `url(${image})`,
 				}}
 			></div>
 

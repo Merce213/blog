@@ -7,7 +7,9 @@ import Divider from "@mui/joy/Divider";
 import Typography from "@mui/joy/Typography";
 import { Link } from "react-router-dom";
 
-const OverflowCard = ({ article: { _id, title, content, createdAt } }) => {
+const OverflowCard = ({
+	article: { _id, title, content, image, createdAt },
+}) => {
 	const dateAndTime = (iso) => {
 		const date = new Date(iso);
 		return date.toLocaleString("fr-FR");
@@ -18,10 +20,9 @@ const OverflowCard = ({ article: { _id, title, content, createdAt } }) => {
 			<CardOverflow>
 				<AspectRatio ratio="2">
 					<img
-						src="https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?auto=format&fit=crop&w=318"
-						srcSet="https://images.unsplash.com/photo-1532614338840-ab30cf10ed36?auto=format&fit=crop&w=318&dpr=2 2x"
+						src={image}
 						loading="lazy"
-						alt=""
+						alt={`image de l'article ${title}`}
 					/>
 				</AspectRatio>
 			</CardOverflow>
