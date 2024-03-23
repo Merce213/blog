@@ -16,7 +16,17 @@ export const createArticle = async (req, res) => {
 		await newArticle.save();
 		res.status(201).json(newArticle);
 	} catch (error) {
-		res.status(409).json({ message: error.message });
+		if (error.errors) {
+			const errors = {};
+
+			Object.keys(error.errors).forEach((key) => {
+				errors[key] = error.errors[key].message;
+			});
+			res.status(400).json({ errors });
+		} else {
+			console.error(error);
+			res.status(500).json({ message: "Internal server error" });
+		}
 	}
 };
 

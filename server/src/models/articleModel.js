@@ -4,16 +4,20 @@ const articleSchema = new mongoose.Schema(
 	{
 		title: {
 			type: String,
-			required: true,
+			required: [true, "Le titre est requis"],
 		},
 		content: {
 			type: String,
-			required: true,
+			required: [true, "Le contenu est requis"],
+		},
+		image: {
+			type: String,
+			required: [true, "L'image est requise"],
 		},
 		status: {
 			type: String,
 			enum: ["Draft", "Published"],
-			required: true,
+			required: [true, "Le statut est requis"],
 		},
 	},
 	{
