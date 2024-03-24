@@ -1,13 +1,28 @@
+import { Link } from "react-router-dom";
+
 const Nav = () => {
 	return (
-		<header>
-			<nav>
-				<ul>
+		<header className="shadow shadow-slate-50">
+			<nav className="container mx-auto flex px-6 py-4">
+				<ul className="flex w-full items-center justify-between">
 					<li>
-						<a href="/">Home</a>
+						<Link to="/" className="text-2xl font-bold">
+							Blog App
+						</Link>
 					</li>
 					<li>
-						<a href="/admin/dashboard">Dashboard</a>
+						<ul className="flex gap-5">
+							<li>
+								<Link to="/" className="p-4">
+									Accueil
+								</Link>
+							</li>
+							<li>
+								<Link to="/admin/dashboard" className="p-4">
+									Tableau de bord
+								</Link>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</nav>

@@ -9,9 +9,9 @@ import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import Button from "@mui/joy/Button";
 import AspectRatio from "@mui/joy/AspectRatio";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const CreateArticle = ({ setOpenModal }) => {
+const EditArticle = ({ id, setOpenModal }) => {
 	const [articleData, setArticleData] = useState({
 		title: "",
 		content: "",
@@ -20,6 +20,20 @@ const CreateArticle = ({ setOpenModal }) => {
 	});
 
 	const [errors, setErrors] = useState({});
+
+	useEffect(() => {
+		const fetchArticle = async () => {
+			const response = await fetch(
+				`http://localhost:8080/api/article/${id}`
+			);
+
+			const data = await response.json();
+
+			setArticleData(data);
+		};
+
+		fetchArticle();
+	}, [id]);
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -83,13 +97,16 @@ const CreateArticle = ({ setOpenModal }) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		const response = await fetch("http://localhost:8080/api/article", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(articleData),
-		});
+		const response = await fetch(
+			`http://localhost:8080/api/article/${id}`,
+			{
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(articleData),
+			}
+		);
 
 		const data = await response.json();
 
@@ -98,13 +115,6 @@ const CreateArticle = ({ setOpenModal }) => {
 
 			return;
 		}
-
-		setArticleData({
-			title: "",
-			content: "",
-			image: "",
-			status: "Draft",
-		});
 
 		setErrors([]);
 
@@ -132,7 +142,7 @@ const CreateArticle = ({ setOpenModal }) => {
 		>
 			<div>
 				<Typography level="h4" component="h1">
-					Créer un article
+					{`Modifier l'article intitulé: ${articleData.title}`}
 				</Typography>
 			</div>
 			<form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -221,7 +231,7 @@ const CreateArticle = ({ setOpenModal }) => {
 						<Select
 							name="status"
 							value={articleData.status}
-							defaultValue="Draft"
+							defaultValue={articleData.status}
 							onChange={handleSelectChange}
 						>
 							<Option value="Draft">Brouillon</Option>
@@ -234,7 +244,7 @@ const CreateArticle = ({ setOpenModal }) => {
 							mt: 1,
 						}}
 					>
-						Publier
+						Modifier
 					</Button>
 				</div>
 			</form>
@@ -242,4 +252,4 @@ const CreateArticle = ({ setOpenModal }) => {
 	);
 };
 
-export default CreateArticle;
+export default EditArticle;

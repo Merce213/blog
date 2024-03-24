@@ -52,7 +52,7 @@ export const getArticleById = async (req, res) => {
 
 export const updateArticle = async (req, res) => {
 	const { id } = req.params;
-	const { title, content, status } = req.body;
+	const { title, content, image, status } = req.body;
 
 	if (!mongoose.Types.ObjectId.isValid(id))
 		return res.status(404).json({ message: `No article with id: ${id}` });
@@ -63,7 +63,7 @@ export const updateArticle = async (req, res) => {
 		});
 	}
 
-	const updatedArticle = { title, content, status, _id: id };
+	const updatedArticle = { title, content, image, status, _id: id };
 
 	await Article.findByIdAndUpdate(id, updatedArticle, { new: true });
 
