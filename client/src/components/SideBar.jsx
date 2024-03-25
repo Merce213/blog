@@ -1,12 +1,28 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const SideBar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 
+	const sideBarRef = useRef(null);
+
 	const handleToggle = () => {
 		setIsOpen(!isOpen);
 	};
+
+	const handleClickOutside = (event) => {
+		if (sideBarRef.current && !sideBarRef.current.contains(event.target)) {
+			setIsOpen(false);
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener("mousedown", handleClickOutside);
+
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, []);
 
 	return (
 		<div className="flex">
@@ -37,6 +53,7 @@ const SideBar = () => {
 					(isOpen ? " translate-x-0" : "")
 				}
 				aria-label="Sidebar"
+				ref={sideBarRef}
 			>
 				<div className="h-full overflow-y-auto bg-gray-800 px-3 py-4">
 					<div>
